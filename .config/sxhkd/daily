@@ -1,0 +1,17 @@
+super + Return
+	sh -c "$DEFAULT_TERM & exit"
+
+super + q	
+	xkill -id $(pfw)
+
+super + d
+	rofi -show run
+
+super + f
+	fullscreen right $(pfw)
+
+super + F
+	fullscreen full $(pfw)
+
+super + s
+	session_menu

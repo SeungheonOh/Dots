@@ -1,0 +1,7 @@
+#!/bin/bash
+
+file=$(date +"%b-%d-%Y-%R").jpg
+dir=~/Screenshot/${file}
+
+import -window root ${dir}
+echo "Saved at ${dir}"

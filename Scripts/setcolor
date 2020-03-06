@@ -1,0 +1,24 @@
+#!/bin/bash
+
+sequence=""
+
+while read l; do
+	[[ $l != *"*."* ]] && continue
+	lineseg=( $l )
+	index=$(echo $l | sed -e "s/\s.*//" -e "s/^*.//" -e "s/color//" -e "s/:$//")
+	color=$(echo $l | sed -e "s/.*\s//")
+	if [ "$index" == "background" ]; then
+		sequence+="\033]11;${color}\007" # Background
+		sequence+="\033]17;${color}\007" # Background
+		sequence+="\033]708;${color}\007" # Border
+	elif [ "$index" == "foreground" ]; then
+		sequence+="\033]10;${color}\007" # Background
+		sequence+="\033]19;${color}\007" # Background
+	else
+		sequence+="\033]4;${index};${color}\007" # Colors
+	fi
+done <<< "$(xrdb -query)"
+
+for tty in /dev/pts/[0-9]*; do
+	printf "%b" "$sequence" > "$tty"
+done

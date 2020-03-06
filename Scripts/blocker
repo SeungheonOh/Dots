@@ -1,0 +1,5 @@
+#!/bin/bash
+
+convert -size 2560x1440 xc:#707AD5 ~/.tmp/screensaver.png
+
+sxiv ~/.tmp/screensaver.png -b -g 1000x1000&

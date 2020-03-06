@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sequence=""
+font=$1
+
+sequence="\033]69;${font}\007"
+
+for tty in /dev/pts/[0-9]*; do
+	printf '%b' "$sequence" > "$tty"
+done

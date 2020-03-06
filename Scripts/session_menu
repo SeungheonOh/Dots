@@ -1,0 +1,61 @@
+#!/bin/bash
+
+get_choice() {
+	title=$1
+	shift
+	echo $(printf '%s\n' "$@" | rofi -dmenu -p "$title")
+}
+
+get_YN() {
+	get_choice "Are you sure?" "Yes" "No"
+}
+
+choice=$(get_choice "Session Menu" "exit session" "startup" "full screen" "daily preset" "color" "xrdm" "dev" "web" "fetch" "close")
+
+case "$choice" in
+	"exit session") 
+		[ $(get_YN) == "Yes" ] && killall sxhkd
+		;;
+	"startup")
+		wind &
+		;;
+	"full screen")
+		fullscreen $(get_choice "To where?" $(fullscreen)) $(pfw)
+		;;
+	"daily preset")
+		xrdm preset daily
+		;;
+	"color")
+		xrdm color $(get_choice "color" $(xrdm color))
+		;;
+	"xrdm")
+		case "$(get_choice "xrdm" "color" "font" "program" "preset")" in
+			"color")
+				xrdm color $(get_choice "color" $(xrdm color))
+				;;
+			"font")
+				xrdm font $(get_choice "font" $(xrdm font))
+				;;
+			"program")
+				xrdm program $(get_choice "program" $(xrdm program))
+				;;
+			"preset")
+				xrdm preset $(get_choice "preset" $(xrdm preset))
+				;;
+		esac
+		;;
+	"dev")
+		st -e "tmux" &
+		sleep 0.1
+		fullscreen $(get_choice "To where?" $(fullscreen)) $(xdotool click 1 | slw)
+		;;
+	"web")
+		firefox & 
+		sleep 0.1
+		fullscreen $(get_choice "To where?" $(fullscreen)) $(xdotool click 1 | slw)
+		;;
+	"close")
+		killw $(pfw)
+		;;
+	*) ;;
+esac

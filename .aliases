@@ -1,0 +1,36 @@
+# Begin ~/.aliases
+# For user-wide alias
+
+as_root() {
+	if [ $EUID = 0 ] ; then $*
+	elif [ -x /usr/bin/sudo ] ; then sudo $*
+	else su -c \\"$*\\"
+	fi
+}
+export -f as_root
+
+function make_thumbnail() {
+	convert -size 1000x500 xc:"#FFFFFF" "$1"
+	convert aa.png -gravity Center -pointsize 130 -fill "#000000" -annotate 0 "$2" "$1"
+}
+
+
+function c() {
+	arguments=""
+	for arg in $@; do
+		if [[ "$arg" == *'.'* ]]; then
+			for dots in {1..5}; do
+				if [ "$arg" == $(printf "%0.s." $(seq 1 $dots)) ]; then
+					arguments+=" $(printf "%0.s../" $(seq 1 $((${dots} - 1))))"
+				fi
+			done
+		else
+			arguments+=" ${arg}"
+		fi
+	done
+	cd $arguments
+	unset arguments
+}
+
+alias v="nvim"
+alias qemu="qemu-system-x86_64"

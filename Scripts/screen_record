@@ -1,0 +1,2 @@
+#!/bin/bash
+ffmpeg -s 2560x1440 -r 60 -f x11grab -i :0.0 ~/Screenshot/vid/out.mp4
