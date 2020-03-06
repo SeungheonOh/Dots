@@ -8,11 +8,11 @@
 # Personal aliases/functions => ~/.bashrc
 # ----------------------------------------------------- #
 
+# Source
 if [ -f "/etc/bashrc" ] ; then
 	source /etc/bashrc
 fi
 
-# 
 source ~/.aliases
 source ~/.cargo/env
 
@@ -20,7 +20,12 @@ pathappend ~/Scripts
 pathappend /usr/local/go/bin:/$GOPATH/bin
 
 # Prompt
-export PS1="➜ "
+declare -a prompts=("λ" "$" "±" "Δ")
+
+get_prompt_char() {
+	echo ${prompts[(($RANDOM % ${#prompts[@]}))]}
+}
+export PS1='\[\e[1;32m\]$(get_prompt_char)\[\e[0m\] ( \W ) '
 
 # Envs
 export GOPATH=$HOME/go
