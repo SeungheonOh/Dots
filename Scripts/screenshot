@@ -3,5 +3,11 @@
 file=$(date +"%b-%d-%Y-%R").jpg
 dir=~/Screenshot/${file}
 
-import -window root ${dir}
-echo "Saved at ${dir}"
+case "$1" in
+  "Area") import ${dir} ;;
+  "Window") import -window $(slw) ${dir} ;;
+  "Full") import -window root ${dir};;
+  *)echo "Area" "Window" "Full" && exit 1;;
+esac
+
+notify-send "Saved at ${dir}"

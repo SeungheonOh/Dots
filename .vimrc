@@ -6,9 +6,8 @@ colorscheme seoul256
 
 " Editor
 "
+set tabstop=2 shiftwidth=2 expandtab
 set guifont=Iosevka\ Regular:h20
-set tabstop=2
-set shiftwidth=2
 set softtabstop=2
 set smarttab
 set nu

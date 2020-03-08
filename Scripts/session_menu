@@ -10,7 +10,8 @@ get_YN() {
 	get_choice "Are you sure?" "Yes" "No"
 }
 
-choice=$(get_choice "Session Menu" "exit session" "startup" "full screen" "daily preset" "color" "xrdm" "dev" "web" "fetch" "close")
+choice=$1
+[[ -z $1 ]] && choice=$(get_choice "Session Menu" "exit session" "startup" "full" "daily preset" "color" "xrdm" "screenshot" "dev" "web" "fetch" "close")
 
 case "$choice" in
 	"exit session") 
@@ -19,8 +20,8 @@ case "$choice" in
 	"startup")
 		wind &
 		;;
-	"full screen")
-		fullscreen $(get_choice "To where?" $(fullscreen)) $(pfw)
+	"full")
+		fullscreen $(get_choice "To where?" $(fullscreen) "No") $(pfw)
 		;;
 	"daily preset")
 		xrdm preset daily
@@ -44,15 +45,18 @@ case "$choice" in
 				;;
 		esac
 		;;
+  "screenshot")
+    screenshot $(get_choice "Method" $(screenshot))
+    ;;
 	"dev")
 		st -e "tmux" &
 		sleep 0.1
-		fullscreen $(get_choice "To where?" $(fullscreen)) $(xdotool click 1 | slw)
+    session_menu full
 		;;
 	"web")
 		firefox & 
 		sleep 0.1
-		fullscreen $(get_choice "To where?" $(fullscreen)) $(xdotool click 1 | slw)
+    session_menu full
 		;;
 	"close")
 		killw $(pfw)
