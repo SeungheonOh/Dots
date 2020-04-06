@@ -1,0 +1,5 @@
+color seoul256
+font iosevka
+program dmenu
+program rofi
+program urxvt

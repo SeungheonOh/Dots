@@ -1,0 +1,3 @@
+URxvt*scrollBar: false
+Urxvt*letterSpace: -1
+URxvt*internalBorder: 10
